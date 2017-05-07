@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Prep</string>
+    <string name="title_activity_main">My Recipes</string>
+
+    <string name="add_link">Add recipe link</string>
+    <string name="capture_image">Add photo of Recipe</string>
+    <string name="write_recipe">Write new recipe</string>
+    <string name="add_recipe">Add new recipe</string>
+
+    <string name="take_photo">Take new picture</string>
+    <string name="choose_photo">Select a Picture</string>
+
+    <string name="read_external_rationale">Allow Prep to access photos of recipes in your gallery</string>
+    <string name="ok">OK</string>
+</resources>
