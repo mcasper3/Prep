@@ -29,6 +29,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:background="@color/transparent_black"
+        android:visibility="invisible"
+        android:id="@+id/menu_background" />
+
     <android.support.design.widget.FloatingActionButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,7 +44,17 @@
         android:id="@+id/add_recipe"
         android:layout_gravity="bottom|end"
         android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp" />
+
+    <include
+        layout="@layout/fab_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:id="@+id/fab_menu"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp" />
 
 </android.support.design.widget.CoordinatorLayout>
