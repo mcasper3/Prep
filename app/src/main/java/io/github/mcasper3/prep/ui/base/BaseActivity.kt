@@ -24,7 +24,7 @@ open class BaseActivity : AppCompatActivity() {
         if (sComponentsArray.get(mActivityId) == null) {
             //Timber.i("Creating new ConfigPersistentComponent id=%d", mActivityId)
             configPersistentComponent = DaggerConfigPersistentComponent.builder()
-                    .applicationComponent(PrepApplication.get(this.applicationContext).applicationComponent)
+                    .applicationComponent(PrepApplication.get(this).applicationComponent)
                     .build()
             sComponentsArray.put(mActivityId, configPersistentComponent)
         } else {

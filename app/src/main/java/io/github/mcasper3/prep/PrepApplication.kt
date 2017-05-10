@@ -32,11 +32,7 @@ class PrepApplication : Application() {
 
     companion object {
         fun get(context: Context): PrepApplication {
-            if (context !is Application) {
-                throw IllegalArgumentException("Must provide application context")
-            }
-
-            return context as PrepApplication
+            return context.applicationContext as PrepApplication
         }
     }
 }
