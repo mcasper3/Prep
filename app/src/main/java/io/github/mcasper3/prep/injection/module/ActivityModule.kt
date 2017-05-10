@@ -6,9 +6,9 @@ import dagger.Module
 import dagger.Provides
 import io.github.mcasper3.prep.data.sources.DataManager
 import io.github.mcasper3.prep.injection.scope.ActivityContext
-import io.github.mcasper3.prep.ui.recipes.RecipeDataTransformer
-import io.github.mcasper3.prep.ui.recipes.RecipePresenter
-import io.github.mcasper3.prep.ui.recipes.RecipePresenterImpl
+import io.github.mcasper3.prep.ui.recipes.list.RecipeDataTransformer
+import io.github.mcasper3.prep.ui.recipes.list.RecipePresenter
+import io.github.mcasper3.prep.ui.recipes.list.RecipePresenterImpl
 
 @Module
 class ActivityModule(private val activity: Activity) {

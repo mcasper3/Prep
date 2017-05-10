@@ -39,7 +39,6 @@ dependencies {
 
     compile 'com.jakewharton:kotterknife:0.1.0-SNAPSHOT'
 
-    // RxBinding
     compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-design-kotlin:2.0.0'
 

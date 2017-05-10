@@ -1,4 +1,4 @@
-package io.github.mcasper3.prep.ui.recipes
+package io.github.mcasper3.prep.ui.recipes.list
 
 class Recipe(private val recipe: RecipePresentationModel) {
 

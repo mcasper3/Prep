@@ -1,4 +1,4 @@
-package io.github.mcasper3.prep.ui.recipes
+package io.github.mcasper3.prep.ui.recipes.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.View

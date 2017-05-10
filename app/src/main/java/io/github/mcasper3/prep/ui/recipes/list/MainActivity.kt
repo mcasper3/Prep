@@ -1,19 +1,15 @@
-package io.github.mcasper3.prep.ui.recipes
+package io.github.mcasper3.prep.ui.recipes.list
 
+import android.animation.Animator
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import butterknife.bindView
-import io.github.mcasper3.prep.R
-import io.github.mcasper3.prep.ui.base.BaseActivity
-import javax.inject.Inject
-import android.animation.Animator
-import android.os.Handler
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
@@ -21,6 +17,13 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.OvershootInterpolator
+import butterknife.bindView
+import com.jakewharton.rxbinding2.view.RxView
+import io.github.mcasper3.prep.R
+import io.github.mcasper3.prep.ui.base.BaseActivity
+import io.github.mcasper3.prep.ui.recipes.camera.CameraActivity
+import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 
 class MainActivity : BaseActivity(), RecipeView {
     val mAddRecipeButton: FloatingActionButton by bindView(R.id.add_recipe)
@@ -37,6 +40,8 @@ class MainActivity : BaseActivity(), RecipeView {
 
     @Inject lateinit var mRecipeAdapter: RecipeAdapter
     @Inject lateinit var mPresenter: RecipePresenter
+
+    lateinit var mClickObservables: Array<Disposable>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +61,7 @@ class MainActivity : BaseActivity(), RecipeView {
         setUpFloatingActionMenu()
 
         mAddRecipeButton.setOnClickListener {
-            val expanded = mFabMenuBackground.visibility == View.VISIBLE
+            val expanded = mFabMenuBackground.visibility == android.view.View.VISIBLE
 
             mAddRecipeButton.animate()
                     .rotation(if (expanded) 0f else 135f)
@@ -66,6 +71,16 @@ class MainActivity : BaseActivity(), RecipeView {
 
             animateFabMenu(expanded, false)
         }
+
+        mClickObservables = arrayOf(
+                RxView.clicks(mOption2)
+                        .doOnNext {
+                            val cameraIntent = CameraActivity.createIntent(this)
+                            startActivity(cameraIntent)
+                        }
+                        .subscribe()
+        )
+
     }
 
     override fun onDestroy() {
@@ -75,7 +90,8 @@ class MainActivity : BaseActivity(), RecipeView {
     }
 
     override fun showLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") //To change body of created fu
+        // nctions use File | Settings | File Templates.
     }
 
     override fun hideLoading() {
