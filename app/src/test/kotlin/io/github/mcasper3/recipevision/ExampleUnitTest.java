@@ -1,4 +1,4 @@
-package io.github.mcasper3.recipevision;
+package io.github.mcasper3.prep;
 
 import org.junit.Test;
 

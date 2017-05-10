@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">Prepify</string>
+    <string name="app_name">Prep</string>
     <string name="title_activity_main">My Recipes</string>
+
+    <string name="add_link">Add Recipe Link</string>
+    <string name="capture_image">Add Photo of Recipe</string>
+    <string name="add_recipe">Write a New Recipe</string>
 </resources>
