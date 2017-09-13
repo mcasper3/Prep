@@ -38,7 +38,7 @@ abstract class DataModule {
             return builder.build()
         }
 
-        @JvmStatic @Provides @Singleton fun provideRetrofit(okHttpClient: OkHttpClient) = Retrofit.Builder()
+        @JvmStatic @Provides @Singleton fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl("https://api.ocr.space")

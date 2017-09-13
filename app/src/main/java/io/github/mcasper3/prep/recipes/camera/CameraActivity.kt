@@ -5,24 +5,27 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.speech.tts.TextToSpeech
-import android.support.media.ExifInterface
+import android.support.design.widget.Snackbar
 import android.support.v4.content.FileProvider
 import android.util.Log
+import android.view.View
 import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import butterknife.bindView
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.PrepActivity
+import io.github.mcasper3.prep.common.resize
 import io.github.mcasper3.prep.util.PermissionHelper
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import java.io.File
 import java.io.IOException
-import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -31,18 +34,20 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     private val REQUEST_TAKE_PHOTO = 1
     private val REQUEST_CHOOSE_PHOTO = 2
     private val REQUEST_READ_EXTERNAL = 3
+    private val MAX_FILE_SIZE = 1024 * 1024
 
     @Inject override lateinit var presenter: CameraPresenter
     @Inject lateinit var permissionHelper: PermissionHelper
 
-    private val mTakePhotoButton: Button by bindView(R.id.take_photo)
-    private val mChoosePhotoButton: Button by bindView(R.id.choose_photo)
-    private val mImage: ImageView by bindView(R.id.selected)
-    private val mText: TextView by bindView(R.id.textToShow)
+    private val takePhotoButton: Button by bindView(R.id.take_photo)
+    private val choosePhotoButton: Button by bindView(R.id.choose_photo)
+    private val loadingView: View by bindView(R.id.loading)
+    private val rootView: View by bindView(R.id.topLayout)
 
     // A TextToSpeech engine for speaking a String value.
     private var tts: TextToSpeech? = null
-    private var mCurrentImagePath: String? = null
+    private var currentImagePath: String? = null
+    private var disposables = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,11 +64,11 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
         }
         tts = TextToSpeech(this.applicationContext, listener)
 
-        mTakePhotoButton.setOnClickListener {
+        takePhotoButton.setOnClickListener {
             dispatchTakePictureIntent()
         }
 
-        mChoosePhotoButton.setOnClickListener {
+        choosePhotoButton.setOnClickListener {
             if (permissionHelper.hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE,
                     REQUEST_READ_EXTERNAL, R.string.read_external_rationale)) {
 
@@ -72,34 +77,55 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
         }
     }
 
+    override fun onDestroy() {
+        disposables.dispose()
+
+        super.onDestroy()
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
-        if (mCurrentImagePath != null) {
-            outState.putString("path", mCurrentImagePath)
+        if (currentImagePath != null) {
+            outState.putString("path", currentImagePath)
         }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        mCurrentImagePath = savedInstanceState?.getString("path")
+        currentImagePath = savedInstanceState?.getString("path")
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_CHOOSE_PHOTO)) {
-            var bitmap: Bitmap
-            val exif: ExifInterface
-            var size: Long = 0
-            val inputStream: InputStream
-            val secondInputStream: InputStream
+            currentImagePath?.let { imagePath ->
+                BitmapFactory().resize(imagePath, MAX_FILE_SIZE)
 
-                val file = File(mCurrentImagePath)
-                size = file.length()
+                disposables.add(presenter.processImage(File(imagePath))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(object : DisposableObserver<ParseResponse>() {
+                            override fun onComplete() {}
 
-            if (size > 10 * 1024) {
-                Log.i("Size", "$size")
+                            override fun onNext(response: ParseResponse) {
+                                when (response.status) {
+                                    ParseResponseStatus.IN_PROGRESS -> loadingView.visibility = View.VISIBLE
+                                    ParseResponseStatus.FAILURE -> {
+                                        loadingView.visibility = View.GONE
+                                        Snackbar.make(
+                                                rootView,
+                                                response.errorMessage ?: getString(R.string.generic_error),
+                                                Snackbar.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    ParseResponseStatus.SUCCESS -> {
+                                        loadingView.visibility = View.GONE
+                                    }
+                                }
+                            }
+
+                            override fun onError(e: Throwable) {
+                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                            }
+                        }))
             }
-
-            // TODO resize image if needed
-
-            presenter.processImage(File(mCurrentImagePath))
         }
     }
 
@@ -134,9 +160,10 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
             if (photoFile != null) {
                 val photoUri = FileProvider.getUriForFile(this, "io.github.mcasper3.prep", photoFile)
 
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                startActivityForResult(takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri), REQUEST_TAKE_PHOTO)
             }
+        } else {
+            Snackbar.make(rootView, R.string.camera_not_found, Snackbar.LENGTH_SHORT)
         }
     }
 
@@ -147,7 +174,7 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
 
         val image = File.createTempFile(imageFileName, ".jpg", storageDir)
 
-        mCurrentImagePath = image.absolutePath
+        currentImagePath = image.absolutePath
 
         return image
     }

@@ -1,8 +1,9 @@
 package io.github.mcasper3.prep.data.sources
 
+import io.github.mcasper3.prep.recipes.camera.ParseRequest
+import io.github.mcasper3.prep.recipes.camera.ParseResponse
 import io.reactivex.Observable
-import okhttp3.MultipartBody
 
 interface RecipeDataSource {
-    fun parseRecipe(image: MultipartBody.Part): Observable<Boolean>
+    fun parseRecipe(parseRequest: ParseRequest): Observable<ParseResponse>
 }

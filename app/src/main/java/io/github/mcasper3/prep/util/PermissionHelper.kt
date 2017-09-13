@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.support.annotation.StringRes
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AlertDialog
-import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.PrepActivity
 import javax.inject.Inject
 
@@ -18,7 +17,7 @@ class PermissionHelper @Inject constructor(private val activity: PrepActivity<*,
                 AlertDialog.Builder(activity)
                         .setMessage(rationale)
                         .setPositiveButton(
-                                R.string.ok, { _, _ -> ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode) }
+                                android.R.string.ok, { _, _ -> ActivityCompat.requestPermissions(activity, arrayOf(permission), requestCode) }
                         )
                         .create()
             } else {
