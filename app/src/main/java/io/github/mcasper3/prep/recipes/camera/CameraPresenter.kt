@@ -9,13 +9,15 @@ import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
-class CameraPresenter @Inject constructor(private val dataManager: DataManager): Presenter<CameraView>() {
+class CameraPresenter @Inject constructor(private val dataManager: DataManager) : Presenter<CameraView>() {
     fun processImage(image: File): Observable<ParseResponse> {
         return dataManager.parseRecipe(ParseRequest(image))
-                .onErrorReturn({ t ->
-                    Timber.e(t)
-                    ParseResponse.failure(t.localizedMessage)
-                })
+                .onErrorReturn(
+                        { t ->
+                            Timber.e(t)
+                            ParseResponse.failure(t.localizedMessage)
+                        }
+                )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .startWith(ParseResponse.inProgress())

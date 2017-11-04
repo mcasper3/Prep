@@ -8,9 +8,5 @@ class RecipePresenter @Inject constructor(
         private val dataManager: DataManager,
         private val dataTransformer: RecipeDataTransformer
 ) : Presenter<RecipeView>() {
-    fun getRecipes() {
-        checkIfViewAttached()
-
-        view?.showRecipes(dataTransformer.getRecipes())
-    }
+    fun getRecipes() = checkIfViewAttached { view?.showRecipes(dataTransformer.getRecipes()) }
 }

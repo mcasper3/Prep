@@ -1,8 +1,10 @@
 package io.github.mcasper3.prep.base
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
 
+@SuppressLint("Registered")
 open class PrepActivity<P, V : View> : DaggerAppCompatActivity() where P : Presenter<V> {
     open lateinit var presenter: P
 

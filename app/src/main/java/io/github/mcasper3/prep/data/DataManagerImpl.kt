@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class DataManagerImpl @Inject constructor(
         private val api: PrepApi
-): DataManager {
+) : DataManager {
     override fun parseRecipe(parseRequest: ParseRequest): Observable<ParseResponse> = api.parseImage(parseRequest.image)
             .map { ParseResponse.success(it) }
 }

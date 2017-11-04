@@ -7,18 +7,17 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.bindView
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.injection.scope.ActivityScope
 import io.github.mcasper3.prep.recipes.camera.CameraActivity
+import kotterknife.bindView
 import javax.inject.Inject
 
 @ActivityScope
-class CreationOptionsBottomSheetDialogFragment @Inject constructor()
-    : BottomSheetDialogFragment(), HasSupportFragmentInjector, CreationOptionsView {
+class CreationOptionsBottomSheetDialogFragment @Inject constructor() : BottomSheetDialogFragment(), HasSupportFragmentInjector, CreationOptionsView {
 
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var presenter: CreationOptionsPresenter
@@ -39,8 +38,7 @@ class CreationOptionsBottomSheetDialogFragment @Inject constructor()
         super.onDetach()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_create_options, null)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -58,9 +56,7 @@ class CreationOptionsBottomSheetDialogFragment @Inject constructor()
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun goToTakePhoto() {
-        startActivity(CameraActivity.createIntent(context))
-    }
+    override fun goToTakePhoto() = startActivity(CameraActivity.createIntent(context))
 
     override fun goToChoosePhoto() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

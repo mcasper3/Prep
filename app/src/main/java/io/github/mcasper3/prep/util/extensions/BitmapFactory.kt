@@ -1,4 +1,4 @@
-package io.github.mcasper3.prep.common
+package io.github.mcasper3.prep.util.extensions
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

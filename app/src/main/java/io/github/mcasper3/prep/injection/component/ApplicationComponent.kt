@@ -13,12 +13,14 @@ import io.github.mcasper3.prep.injection.module.ApplicationModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(
-        DataModule::class,
-        ApplicationModule::class,
-        AndroidSupportInjectionModule::class,
-        ActivityBindingModule::class
-))
+@Component(
+        modules = arrayOf(
+                DataModule::class,
+                ApplicationModule::class,
+                AndroidSupportInjectionModule::class,
+                ActivityBindingModule::class
+        )
+)
 interface ApplicationComponent : AndroidInjector<DaggerApplication> {
     fun inject(app: PrepApplication)
 
@@ -26,7 +28,8 @@ interface ApplicationComponent : AndroidInjector<DaggerApplication> {
 
     @Component.Builder
     interface Builder {
-        @BindsInstance fun application(application: Application): ApplicationComponent.Builder
+        @BindsInstance
+        fun application(application: Application): ApplicationComponent.Builder
 
         fun build(): ApplicationComponent
     }

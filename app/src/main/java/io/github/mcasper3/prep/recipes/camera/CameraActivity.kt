@@ -15,15 +15,15 @@ import android.support.v4.content.FileProvider
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import butterknife.bindView
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.PrepActivity
-import io.github.mcasper3.prep.common.resize
 import io.github.mcasper3.prep.util.PermissionHelper
+import io.github.mcasper3.prep.util.extensions.resize
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import kotterknife.bindView
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -31,10 +31,6 @@ import java.util.*
 import javax.inject.Inject
 
 class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
-    private val REQUEST_TAKE_PHOTO = 1
-    private val REQUEST_CHOOSE_PHOTO = 2
-    private val REQUEST_READ_EXTERNAL = 3
-    private val MAX_FILE_SIZE = 1024 * 1024
 
     @Inject override lateinit var presenter: CameraPresenter
     @Inject lateinit var permissionHelper: PermissionHelper
@@ -44,16 +40,14 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     private val loadingView: View by bindView(R.id.loading)
     private val rootView: View by bindView(R.id.topLayout)
 
-    // A TextToSpeech engine for speaking a String value.
-    private var tts: TextToSpeech? = null
-    private var currentImagePath: String? = null
     private var disposables = CompositeDisposable()
+    private var currentImagePath: String? = null
+    private var tts: TextToSpeech? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
 
-        // Set up the Text To Speech engine.
         val listener = TextToSpeech.OnInitListener { status ->
             if (status == TextToSpeech.SUCCESS) {
                 Log.d("OnInitListener", "Text to speech engine started successfully.")
@@ -69,8 +63,10 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
         }
 
         choosePhotoButton.setOnClickListener {
-            if (permissionHelper.hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE,
-                    REQUEST_READ_EXTERNAL, R.string.read_external_rationale)) {
+            if (permissionHelper.hasPermission(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    REQUEST_READ_EXTERNAL, R.string.read_external_rationale
+            )) {
 
                 dispatchChoosePictureIntent()
             }
@@ -98,33 +94,36 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
             currentImagePath?.let { imagePath ->
                 BitmapFactory().resize(imagePath, MAX_FILE_SIZE)
 
-                disposables.add(presenter.processImage(File(imagePath))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(object : DisposableObserver<ParseResponse>() {
-                            override fun onComplete() {}
+                disposables.add(
+                        presenter.processImage(File(imagePath))
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(
+                                object : DisposableObserver<ParseResponse>() {
+                                    override fun onComplete() {}
 
-                            override fun onNext(response: ParseResponse) {
-                                when (response.status) {
-                                    ParseResponseStatus.IN_PROGRESS -> loadingView.visibility = View.VISIBLE
-                                    ParseResponseStatus.FAILURE -> {
-                                        loadingView.visibility = View.GONE
-                                        Snackbar.make(
-                                                rootView,
-                                                response.errorMessage ?: getString(R.string.generic_error),
-                                                Snackbar.LENGTH_SHORT
-                                        ).show()
+                                    override fun onNext(response: ParseResponse) {
+                                        when (response.status) {
+                                            ParseResponseStatus.IN_PROGRESS -> loadingView.visibility = View.VISIBLE
+                                            ParseResponseStatus.FAILURE -> {
+                                                loadingView.visibility = View.GONE
+                                                Snackbar.make(
+                                                        rootView,
+                                                        response.errorMessage ?: getString(R.string.generic_error),
+                                                        Snackbar.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                            ParseResponseStatus.SUCCESS -> {
+                                                loadingView.visibility = View.GONE
+                                            }
+                                        }
                                     }
-                                    ParseResponseStatus.SUCCESS -> {
-                                        loadingView.visibility = View.GONE
+
+                                    override fun onError(e: Throwable) {
+                                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                                     }
                                 }
-                            }
-
-                            override fun onError(e: Throwable) {
-                                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                            }
-                        }))
+                        )
+                )
             }
         }
     }
@@ -180,6 +179,11 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     }
 
     companion object {
+        internal const val REQUEST_TAKE_PHOTO = 1
+        internal const val REQUEST_CHOOSE_PHOTO = 2
+        internal const val REQUEST_READ_EXTERNAL = 3
+        internal const val MAX_FILE_SIZE = 1024 * 1024
+
         fun createIntent(context: Context): Intent = Intent(context, CameraActivity::class.java)
     }
 }

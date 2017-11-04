@@ -15,12 +15,12 @@ import javax.inject.Singleton
 
 @Module
 abstract class DataModule {
-    @Binds
-    abstract fun provideDataManager(dataManager: DataManagerImpl): DataManager
+    @Binds abstract fun provideDataManager(dataManager: DataManagerImpl): DataManager
 
-    @Module
-    companion object {
-        @JvmStatic @Provides fun provideOkHttpClient(): OkHttpClient {
+    @Module companion object {
+        @JvmStatic
+        @Provides
+        fun provideOkHttpClient(): OkHttpClient {
             val builder = OkHttpClient.Builder()
                     .addInterceptor { chain ->
                         val request = chain.request()
@@ -38,14 +38,19 @@ abstract class DataModule {
             return builder.build()
         }
 
-        @JvmStatic @Provides @Singleton fun provideRetrofit(okHttpClient: OkHttpClient):Retrofit = Retrofit.Builder()
+        @JvmStatic
+        @Provides
+        @Singleton
+        fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(MoshiConverterFactory.create())
                 .baseUrl("https://api.ocr.space")
                 .client(okHttpClient)
                 .build()
 
-        @JvmStatic @Provides fun provideRecipeApi(retrofit: Retrofit): PrepApi = retrofit
+        @JvmStatic
+        @Provides
+        fun provideRecipeApi(retrofit: Retrofit): PrepApi = retrofit
                 .create(PrepApi::class.java)
     }
 }

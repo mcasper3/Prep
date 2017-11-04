@@ -5,27 +5,11 @@ import javax.inject.Inject
 
 class CreationOptionsPresenter @Inject constructor() : Presenter<CreationOptionsView>() {
 
-    fun onWriteRecipeClicked() {
-        checkIfViewAttached()
+    fun onWriteRecipeClicked() = checkIfViewAttached { view?.goToWriteRecipe() }
 
-        view?.goToWriteRecipe()
-    }
+    fun onTakePhotoClicked() = checkIfViewAttached { view?.goToTakePhoto() }
 
-    fun onTakePhotoClicked() {
-        checkIfViewAttached()
+    fun onChoosePhotoClicked() = checkIfViewAttached { view?.goToChoosePhoto() }
 
-        view?.goToTakePhoto()
-    }
-
-    fun onChoosePhotoClicked() {
-        checkIfViewAttached()
-
-        view?.goToChoosePhoto()
-    }
-
-    fun onAddLinkClicked() {
-        checkIfViewAttached()
-
-        view?.goToAddLink()
-    }
+    fun onAddLinkClicked() = checkIfViewAttached { view?.goToAddLink() }
 }

@@ -11,13 +11,14 @@ import io.github.mcasper3.prep.util.ProdTree
 import timber.log.Timber
 
 class PrepApplication : DaggerApplication() {
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = appComponent
 
     private val appComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder()
                 .application(this)
                 .build()
     }
+
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> = appComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -28,15 +29,19 @@ class PrepApplication : DaggerApplication() {
 
         LeakCanary.install(this)
 
-        StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .penaltyDialog()
-                .build())
-        StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build())
+        StrictMode.setThreadPolicy(
+                StrictMode.ThreadPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .penaltyDialog()
+                        .build()
+        )
+        StrictMode.setVmPolicy(
+                StrictMode.VmPolicy.Builder()
+                        .detectAll()
+                        .penaltyLog()
+                        .build()
+        )
 
         appComponent.inject(this)
 

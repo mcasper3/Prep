@@ -8,10 +8,10 @@ import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
-import butterknife.bindView
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.PrepActivity
 import io.github.mcasper3.prep.recipes.list.creation.CreationOptionsBottomSheetDialogFragment
+import kotterknife.bindView
 import javax.inject.Inject
 
 class RecipeListActivity : PrepActivity<RecipePresenter, RecipeView>(), RecipeView {
@@ -57,7 +57,7 @@ class RecipeListActivity : PrepActivity<RecipePresenter, RecipeView>(), RecipeVi
     }
 
     override fun showRecipes(recipes: Array<Recipe>) {
-        recipeAdapter.setRecipes(recipes)
+        recipeAdapter.recipes = recipes
     }
 
     companion object {
