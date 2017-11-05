@@ -7,6 +7,8 @@ import io.github.mcasper3.prep.recipes.camera.CameraActivity
 import io.github.mcasper3.prep.recipes.camera.CameraModule
 import io.github.mcasper3.prep.recipes.list.RecipeListActivity
 import io.github.mcasper3.prep.recipes.list.RecipeListActivityModule
+import io.github.mcasper3.prep.recipeviewer.RecipeViewerActivity
+import io.github.mcasper3.prep.recipeviewer.RecipeViewerModule
 
 @Module
 abstract class ActivityBindingModule {
@@ -18,4 +20,8 @@ abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = arrayOf(CameraModule::class))
     abstract fun cameraActivity(): CameraActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = arrayOf(RecipeViewerModule::class))
+    abstract fun recipeViewerActivity(): RecipeViewerActivity
 }

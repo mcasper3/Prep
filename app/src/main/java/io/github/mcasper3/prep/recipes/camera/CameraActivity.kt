@@ -15,13 +15,16 @@ import android.support.v4.content.FileProvider
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.PrepActivity
+import io.github.mcasper3.prep.data.api.FailureUiModel
+import io.github.mcasper3.prep.data.api.InProgressUiModel
+import io.github.mcasper3.prep.data.api.ocr.OcrResponse
 import io.github.mcasper3.prep.util.PermissionHelper
 import io.github.mcasper3.prep.util.extensions.resize
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import kotterknife.bindView
 import java.io.File
@@ -39,6 +42,7 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     private val choosePhotoButton: Button by bindView(R.id.choose_photo)
     private val loadingView: View by bindView(R.id.loading)
     private val rootView: View by bindView(R.id.topLayout)
+    private val previewImage: ImageView by bindView(R.id.image_preview)
 
     private var disposables = CompositeDisposable()
     private var currentImagePath: String? = null
@@ -91,40 +95,7 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && (requestCode == REQUEST_TAKE_PHOTO || requestCode == REQUEST_CHOOSE_PHOTO)) {
-            currentImagePath?.let { imagePath ->
-                BitmapFactory().resize(imagePath, MAX_FILE_SIZE)
-
-                disposables.add(
-                        presenter.processImage(File(imagePath))
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread()).subscribeWith(
-                                object : DisposableObserver<ParseResponse>() {
-                                    override fun onComplete() {}
-
-                                    override fun onNext(response: ParseResponse) {
-                                        when (response.status) {
-                                            ParseResponseStatus.IN_PROGRESS -> loadingView.visibility = View.VISIBLE
-                                            ParseResponseStatus.FAILURE -> {
-                                                loadingView.visibility = View.GONE
-                                                Snackbar.make(
-                                                        rootView,
-                                                        response.errorMessage ?: getString(R.string.generic_error),
-                                                        Snackbar.LENGTH_SHORT
-                                                ).show()
-                                            }
-                                            ParseResponseStatus.SUCCESS -> {
-                                                loadingView.visibility = View.GONE
-                                            }
-                                        }
-                                    }
-
-                                    override fun onError(e: Throwable) {
-                                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                                    }
-                                }
-                        )
-                )
-            }
+            processImage()
         }
     }
 
@@ -135,6 +106,33 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        }
+    }
+
+    override fun showParseResults(result: OcrResponse) {
+        hideLoading()
+    }
+
+    override fun showLoading() {
+        loadingView.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        loadingView.visibility = View.GONE
+    }
+
+    override fun showEmpty() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError(uiModel: FailureUiModel) {
+        super.showError(uiModel)
+        if (uiModel.hasErrorMessage()) {
+            Snackbar.make(
+                    rootView,
+                    uiModel.errorMessage ?: getString(R.string.generic_error),
+                    Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -176,6 +174,27 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
         currentImagePath = image.absolutePath
 
         return image
+    }
+
+    private fun processImage() = currentImagePath?.let { imagePath ->
+        BitmapFactory().resize(imagePath, MAX_FILE_SIZE)
+
+        val myBitmap = BitmapFactory.decodeFile(File(imagePath).absolutePath)
+
+        previewImage.setImageBitmap(myBitmap)
+
+        disposables.add(
+                presenter.processImage(File(imagePath))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe {
+                            when (it) {
+                                is InProgressUiModel -> showLoading()
+                                is FailureUiModel -> showError(it)
+                                is ParseSuccessUiModel -> showParseResults(it.ocrResponse)
+                            }
+                        }
+        )
     }
 
     companion object {

@@ -13,4 +13,5 @@
     <string name="camera_not_found">Camera not available</string>
     <string name="read_external_rationale">Allow Prep to access photos of recipes in your gallery</string>
     <string name="generic_error">An error occurred. Please try again later</string>
+    <string name="title_activity_recipe_viewer">Recipe Viewer</string>
 </resources>

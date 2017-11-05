@@ -1,5 +1,6 @@
 package io.github.mcasper3.prep.recipes.camera
 
+import io.github.mcasper3.prep.data.api.SuccessUiModel
 import io.github.mcasper3.prep.data.api.ocr.OcrResponse
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -14,20 +15,4 @@ class ParseRequest(image: File) {
     }
 }
 
-class ParseResponse(
-        val status: ParseResponseStatus,
-        val errorMessage: String? = null,
-        val ocrResponse: OcrResponse? = null
-) {
-    companion object {
-        fun inProgress() = ParseResponse(ParseResponseStatus.IN_PROGRESS)
-        fun failure(errorMessage: String) = ParseResponse(ParseResponseStatus.FAILURE, errorMessage)
-        fun success(ocrResponse: OcrResponse) = ParseResponse(ParseResponseStatus.SUCCESS, ocrResponse = ocrResponse)
-    }
-}
-
-enum class ParseResponseStatus {
-    IN_PROGRESS,
-    SUCCESS,
-    FAILURE
-}
+class ParseSuccessUiModel(val ocrResponse: OcrResponse) : SuccessUiModel()

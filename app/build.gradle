@@ -17,6 +17,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         debug {
             minifyEnabled false
@@ -32,7 +36,7 @@ android {
 
 dependencies {
     final SUPPORT_VERSION = '26.0.2'
-    final DAGGER_VERSION = '2.11'
+    final DAGGER_VERSION = '2.12'
     final RETROFIT_VERSION = '2.3.0'
     final OKHTTP_VERSION = '3.9.0'
 

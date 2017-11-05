@@ -1,76 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:gravity="bottom|start"
-        android:textSize="20sp"
         android:layout_marginStart="15dp"
+        android:gravity="bottom|start"
+        android:text="@string/add_recipe"
         android:textColor="@android:color/darker_gray"
-        android:text="@string/add_recipe" />
+        android:textSize="20sp"
+        />
 
     <FrameLayout
         android:id="@+id/option_write_recipe"
+        style="@style/BottomSheetWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/BottomSheetWrapper">
+        >
 
         <TextView
+            style="@style/BottomSheetOption"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            style="@style/BottomSheetOption"
             android:drawableStart="@drawable/ic_pencil"
-            android:text="@string/write_recipe" />
+            android:text="@string/write_recipe"
+            />
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/option_take_photo"
+        style="@style/BottomSheetWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/BottomSheetWrapper">
+        >
 
         <TextView
+            style="@style/BottomSheetOption"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            style="@style/BottomSheetOption"
             android:drawableStart="@drawable/ic_camera"
-            android:text="@string/take_photo" />
+            android:text="@string/take_photo"
+            />
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/option_choose_photo"
+        style="@style/BottomSheetWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/BottomSheetWrapper">
+        >
 
         <TextView
+            style="@style/BottomSheetOption"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            style="@style/BottomSheetOption"
             android:drawableStart="@drawable/ic_camera"
-            android:text="@string/choose_photo" />
+            android:text="@string/choose_photo"
+            />
 
     </FrameLayout>
 
     <FrameLayout
         android:id="@+id/option_add_link"
+        style="@style/BottomSheetWrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/BottomSheetWrapper">
+        >
 
         <TextView
+            style="@style/BottomSheetOption"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            style="@style/BottomSheetOption"
             android:drawableStart="@drawable/ic_add_link"
-            android:text="@string/add_link" />
+            android:text="@string/add_link"
+            />
 
     </FrameLayout>
 

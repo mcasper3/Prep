@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.PrepActivity
+import io.github.mcasper3.prep.data.api.FailureUiModel
 import io.github.mcasper3.prep.recipes.list.creation.CreationOptionsBottomSheetDialogFragment
 import kotterknife.bindView
 import javax.inject.Inject
@@ -52,7 +53,7 @@ class RecipeListActivity : PrepActivity<RecipePresenter, RecipeView>(), RecipeVi
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun showError() {
+    override fun showError(uiModel: FailureUiModel) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

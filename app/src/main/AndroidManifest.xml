@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.github.mcasper3.prep">
+          package="io.github.mcasper3.prep">
 
-    <uses-feature android:name="android.hardware.camera"
-        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false"/>
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".PrepApplication"
@@ -16,7 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="io.github.mcasper3.prep"
@@ -24,22 +24,27 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
+                android:resource="@xml/file_paths"/>
         </provider>
 
         <activity
-            android:name="io.github.mcasper3.prep.splash.SplashActivity"
+            android:name=".splash.SplashActivity"
             android:theme="@style/AppTheme.Splash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name="io.github.mcasper3.prep.recipes.list.RecipeListActivity"
-            android:label="@string/title_activity_main" />
-        <activity android:name="io.github.mcasper3.prep.recipes.camera.CameraActivity" />
+            android:name=".recipes.list.RecipeListActivity"
+            android:label="@string/title_activity_main"/>
+        <activity android:name=".recipes.camera.CameraActivity"/>
+        <activity
+            android:name=".recipeviewer.RecipeViewerActivity"
+            android:label="@string/title_activity_recipe_viewer"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

@@ -2,10 +2,12 @@ package io.github.mcasper3.prep.data.api
 
 import android.support.annotation.StringRes
 
-open class SuccessUiModel
+sealed class UiModel
 
-open class InProgressUiModel
+open class SuccessUiModel : UiModel()
 
-open class FailureUiModel(private val errorMessage: String? = null, @StringRes private val errorMessageResId: Int = 0) {
+open class InProgressUiModel : UiModel()
+
+open class FailureUiModel(val errorMessage: String? = null, @StringRes val errorMessageResId: Int = 0) : UiModel() {
     fun hasErrorMessage() = errorMessage != null || errorMessageResId == 0
 }
