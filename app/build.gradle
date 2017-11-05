@@ -35,12 +35,11 @@ android {
 }
 
 dependencies {
-    final SUPPORT_VERSION = '26.0.2'
+    final SUPPORT_VERSION = '26.1.0'
     final DAGGER_VERSION = '2.12'
     final RETROFIT_VERSION = '2.3.0'
     final OKHTTP_VERSION = '3.9.0'
-
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    final ROOM_VERSION = '1.0.0-rc1'
 
     implementation "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     implementation "com.android.support:design:$SUPPORT_VERSION"
@@ -68,6 +67,10 @@ dependencies {
     implementation "com.google.dagger:dagger-android:$DAGGER_VERSION"
     implementation "com.google.dagger:dagger-android-support:$DAGGER_VERSION"
     kapt "com.google.dagger:dagger-android-processor:$DAGGER_VERSION"
+
+    implementation "android.arch.persistence.room:runtime:$ROOM_VERSION"
+    implementation "android.arch.persistence.room:rxjava2:$ROOM_VERSION"
+    kapt "android.arch.persistence.room:compiler:$ROOM_VERSION"
 
     testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5'

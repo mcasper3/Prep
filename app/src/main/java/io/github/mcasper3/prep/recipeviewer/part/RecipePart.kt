@@ -5,13 +5,10 @@ import android.os.Parcelable
 
 class RecipePart : Parcelable {
 
-    constructor() {
-
-    }
+    constructor()
 
     // region Parcelable Implementation
-    internal constructor(parcel: Parcel) {
-    }
+    internal constructor(parcel: Parcel)
 
     override fun writeToParcel(out: Parcel, flags: Int) {
 
