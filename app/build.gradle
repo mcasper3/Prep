@@ -3,9 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
-def properties = new Properties()
-properties.load(new FileInputStream('app/api.properties'))
-
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -24,12 +21,10 @@ android {
     buildTypes {
         debug {
             minifyEnabled false
-            buildConfigField 'String', 'API_KEY', properties['ocrApiKey']
         }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField 'String', 'API_KEY', properties['ocrApiKey']
         }
     }
 }
