@@ -14,12 +14,12 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(
-        modules = arrayOf(
-                DataModule::class,
-                ApplicationModule::class,
-                AndroidSupportInjectionModule::class,
-                ActivityBindingModule::class
-        )
+    modules = arrayOf(
+        DataModule::class,
+        ApplicationModule::class,
+        AndroidSupportInjectionModule::class,
+        ActivityBindingModule::class
+    )
 )
 interface ApplicationComponent : AndroidInjector<DaggerApplication> {
     fun inject(app: PrepApplication)

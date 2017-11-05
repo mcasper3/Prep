@@ -1,12 +1,18 @@
 package io.github.mcasper3.prep.data.database.recipe
 
-import io.github.mcasper3.prep.data.api.UiModel
-import io.github.mcasper3.prep.data.sources.RecipeDataSource
-import io.github.mcasper3.prep.recipes.camera.ParseRequest
-import io.reactivex.Observable
+import android.arch.persistence.room.Dao
+import android.arch.persistence.room.Delete
+import android.arch.persistence.room.Insert
+import android.arch.persistence.room.Update
 
-class RecipeDao : RecipeDataSource {
-    override fun parseRecipe(parseRequest: ParseRequest): Observable<UiModel> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+@Dao
+interface RecipeDao {
+    @Insert
+    fun insertAll(vararg recipes: Recipe)
+
+    @Update
+    fun updateAll(vararg recipes: Recipe)
+
+    @Delete
+    fun delete(recipe: Recipe)
 }

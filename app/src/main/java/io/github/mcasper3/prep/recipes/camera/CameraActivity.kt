@@ -68,8 +68,8 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
 
         choosePhotoButton.setOnClickListener {
             if (permissionHelper.hasPermission(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    REQUEST_READ_EXTERNAL, R.string.read_external_rationale
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                REQUEST_READ_EXTERNAL, R.string.read_external_rationale
             )) {
 
                 dispatchChoosePictureIntent()
@@ -84,6 +84,7 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
         if (currentImagePath != null) {
             outState.putString("path", currentImagePath)
         }
@@ -129,9 +130,9 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
         super.showError(uiModel)
         if (uiModel.hasErrorMessage()) {
             Snackbar.make(
-                    rootView,
-                    uiModel.errorMessage ?: getString(R.string.generic_error),
-                    Snackbar.LENGTH_SHORT
+                rootView,
+                uiModel.errorMessage ?: getString(R.string.generic_error),
+                Snackbar.LENGTH_SHORT
             ).show()
         }
     }
@@ -184,16 +185,16 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
         previewImage.setImageBitmap(myBitmap)
 
         disposables.add(
-                presenter.processImage(File(imagePath))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe {
-                            when (it) {
-                                is InProgressUiModel -> showLoading()
-                                is FailureUiModel -> showError(it)
-                                is ParseSuccessUiModel -> showParseResults(it.ocrResponse)
-                            }
-                        }
+            presenter.processImage(File(imagePath))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    when (it) {
+                        is InProgressUiModel -> showLoading()
+                        is FailureUiModel -> showError(it)
+                        is ParseSuccessUiModel -> showParseResults(it.ocrResponse)
+                    }
+                }
         )
     }
 
