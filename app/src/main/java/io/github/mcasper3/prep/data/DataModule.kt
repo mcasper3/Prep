@@ -28,14 +28,6 @@ abstract class DataModule {
         @Provides
         fun provideOkHttpClient(): OkHttpClient {
             val builder = OkHttpClient.Builder()
-                .addInterceptor { chain ->
-                    val request = chain.request()
-                        .newBuilder()
-                        .addHeader("apiKey", BuildConfig.API_KEY)
-                        .build()
-
-                    chain.proceed(request)
-                }
 
             if (BuildConfig.DEBUG) {
                 builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
