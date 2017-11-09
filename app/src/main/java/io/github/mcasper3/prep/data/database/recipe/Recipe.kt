@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey
 data class Recipe(
     @ColumnInfo(name = "_id")
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long = 0,
     val name: String,
     @ColumnInfo(name = "cook_time") val cookTime: String,
     @ColumnInfo(name = "prep_time") val prepTime: String

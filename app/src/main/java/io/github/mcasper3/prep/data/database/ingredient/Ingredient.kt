@@ -21,14 +21,15 @@ import io.github.mcasper3.prep.data.database.step.Step
         Index(
             value = "step_id"
         )
-    )
+    ),
+    tableName = "ingredients"
 )
 data class Ingredient(
     @ColumnInfo(name = "_id")
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     val amount: Int,
     val unit: Int,
     val name: String,
-    @ColumnInfo(name = "step_id") val stepId: Int
+    @ColumnInfo(name = "step_id") val stepId: Long
 )

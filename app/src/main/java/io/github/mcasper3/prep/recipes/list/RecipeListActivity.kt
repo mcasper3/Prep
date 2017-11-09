@@ -15,13 +15,13 @@ import io.github.mcasper3.prep.recipes.list.creation.CreationOptionsBottomSheetD
 import kotterknife.bindView
 import javax.inject.Inject
 
-class RecipeListActivity : PrepActivity<RecipePresenter, RecipeView>(), RecipeView {
+class RecipeListActivity : PrepActivity<RecipeListPresenter, RecipeListView>(), RecipeListView {
     private val addRecipeButton: FloatingActionButton by bindView(R.id.add_recipe)
     private val recipesList: RecyclerView by bindView(R.id.recipe_list)
     private val toolbar: Toolbar by bindView(R.id.toolbar)
 
     @Inject lateinit var recipeAdapter: RecipeAdapter
-    @Inject override lateinit var presenter: RecipePresenter
+    @Inject override lateinit var presenter: RecipeListPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

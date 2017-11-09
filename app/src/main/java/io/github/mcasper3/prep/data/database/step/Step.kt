@@ -27,8 +27,8 @@ import io.github.mcasper3.prep.data.database.recipe.Recipe
 data class Step(
     @ColumnInfo(name = "_id")
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0,
     val text: String,
     @ColumnInfo(name = "step_number") val stepNumber: Int,
-    @ColumnInfo(name = "recipe_id") val recipeId: Int
+    @ColumnInfo(name = "recipe_id") val recipeId: Long
 )
