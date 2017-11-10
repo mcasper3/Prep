@@ -19,7 +19,7 @@ class StepDaoTest {
     @JvmField
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private val recipe = Recipe(0, "Test Recipe", "10 minutes", "2 minutes")
+    private val recipe = Recipe(0, "Test RecipeListItem", "10 minutes", "2 minutes")
     private val step = Step(0, "Step 4", 4, 1)
 
     private lateinit var db: PrepDatabase

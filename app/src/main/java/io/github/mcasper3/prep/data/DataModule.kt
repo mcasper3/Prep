@@ -23,7 +23,6 @@ abstract class DataModule {
     @Binds abstract fun provideDataManager(dataManager: DataManagerImpl): DataManager
 
     @Module companion object {
-
         @JvmStatic
         @Provides
         fun provideOkHttpClient(): OkHttpClient {
@@ -57,5 +56,9 @@ abstract class DataModule {
         fun provideDatabase(@AppContext context: Context) = Room
             .databaseBuilder(context, PrepDatabase::class.java, "prep_db")
             .build()
+
+        @JvmStatic
+        @Provides
+        fun provideRecipeDao(database: PrepDatabase) = database.recipeDao()
     }
 }

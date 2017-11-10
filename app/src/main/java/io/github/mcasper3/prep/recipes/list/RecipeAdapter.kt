@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class RecipeAdapter @Inject constructor() : RecyclerView.Adapter<RecipeViewHolder>() {
 
-    internal var recipes: Array<Recipe> = emptyArray()
+    internal var recipes: List<RecipeListItem> = emptyList()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -19,5 +19,5 @@ class RecipeAdapter @Inject constructor() : RecyclerView.Adapter<RecipeViewHolde
     override fun getItemCount() = recipes.size
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) =
-            RecipeViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.item_recipe, parent, false))
+        RecipeViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.item_recipe, parent, false))
 }

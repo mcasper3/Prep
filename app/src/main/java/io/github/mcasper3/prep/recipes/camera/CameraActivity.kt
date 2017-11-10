@@ -140,7 +140,7 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     private fun dispatchChoosePictureIntent() {
         val choosePictureIntent = Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         choosePictureIntent.type = "image/*"
-        startActivityForResult(Intent.createChooser(choosePictureIntent, "Select Recipe"), REQUEST_CHOOSE_PHOTO)
+        startActivityForResult(Intent.createChooser(choosePictureIntent, "Select RecipeListItem"), REQUEST_CHOOSE_PHOTO)
     }
 
     private fun dispatchTakePictureIntent() {

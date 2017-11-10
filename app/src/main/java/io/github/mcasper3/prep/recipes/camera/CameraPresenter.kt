@@ -15,14 +15,14 @@ import javax.inject.Inject
 class CameraPresenter @Inject constructor(private val dataManager: DataManager) : Presenter<CameraView>() {
     fun processImage(image: File): Observable<UiModel> {
         return dataManager.parseRecipe(ParseRequest(image))
-                .onErrorReturn(
-                        { t ->
-                            Timber.e(t)
-                            FailureUiModel(t.localizedMessage)
-                        }
-                )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .startWith(InProgressUiModel())
+            .onErrorReturn(
+                { t ->
+                    Timber.e(t)
+                    FailureUiModel(t.localizedMessage)
+                }
+            )
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .startWith(InProgressUiModel())
     }
 }
