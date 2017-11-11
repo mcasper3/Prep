@@ -16,7 +16,7 @@ interface RecipeDao {
 
     @Transaction
     @Query("SELECT * FROM Recipes WHERE _id = :id")
-    fun getById(id: Int): Flowable<RecipeWithSteps>
+    fun getById(id: Long): Flowable<RecipeWithSteps>
 
     @Insert
     fun insertAll(vararg recipes: Recipe)

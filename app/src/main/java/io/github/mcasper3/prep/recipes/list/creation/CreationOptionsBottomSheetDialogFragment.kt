@@ -11,13 +11,14 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import io.github.mcasper3.prep.R
-import io.github.mcasper3.prep.injection.scope.ActivityScope
+import io.github.mcasper3.prep.injection.scope.FragmentScope
 import io.github.mcasper3.prep.recipes.camera.CameraActivity
 import kotterknife.bindView
 import javax.inject.Inject
 
-@ActivityScope
-class CreationOptionsBottomSheetDialogFragment @Inject constructor() : BottomSheetDialogFragment(), HasSupportFragmentInjector, CreationOptionsView {
+@FragmentScope
+class CreationOptionsBottomSheetDialogFragment @Inject constructor(
+) : BottomSheetDialogFragment(), HasSupportFragmentInjector, CreationOptionsView {
 
     @Inject lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
     @Inject lateinit var presenter: CreationOptionsPresenter
@@ -39,7 +40,7 @@ class CreationOptionsBottomSheetDialogFragment @Inject constructor() : BottomShe
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_create_options, null)
+        inflater.inflate(R.layout.fragment_create_options, null)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -96,6 +96,13 @@ class RecipeDaoTest {
             .assertValue(expected)
     }
 
+    @Test fun verifyGetAllReturnsEmptyListWhenNoRecipesAreSaved() {
+        recipeDao.getAll()
+            .test()
+            .assertNoErrors()
+            .assertValue(emptyList())
+    }
+
     @Test
     fun verifyGetByIdSucceeds() {
         recipeDao.insertAll(*recipes)
