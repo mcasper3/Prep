@@ -14,7 +14,7 @@ class RecipeAdapter @Inject constructor() : RecyclerView.Adapter<RecipeViewHolde
             notifyDataSetChanged()
         }
 
-    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = recipes[position].bind(holder)
+    override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) = holder.bind(recipes[position])
 
     override fun getItemCount() = recipes.size
 

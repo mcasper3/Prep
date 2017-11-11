@@ -26,8 +26,8 @@ class RecipeDaoTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private val recipes = arrayOf(
-        Recipe(name = "Test RecipeListItem", cookTime = "10 minutes", prepTime = "2 minutes"),
-        Recipe(name = "Second Test RecipeListItem", cookTime = "8 minutes", prepTime = "1 minute")
+        Recipe(name = "Test Recipe", cookTime = "10 minutes", prepTime = "2 minutes"),
+        Recipe(name = "Second Test Recipe", cookTime = "8 minutes", prepTime = "1 minute")
     )
     private val steps = arrayOf(
         Step(text = "Step 1", stepNumber = 1, recipeId = 1),
@@ -72,11 +72,11 @@ class RecipeDaoTest {
         assertEquals(cursor.count, 2)
 
         cursor.moveToFirst()
-        assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("name")), "Test RecipeListItem")
+        assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("name")), "Test Recipe")
         assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("cook_time")), "10 minutes")
         assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("prep_time")), "2 minutes")
         cursor.moveToNext()
-        assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("name")), "Second Test RecipeListItem")
+        assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("name")), "Second Test Recipe")
         assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("cook_time")), "8 minutes")
         assertEquals(cursor.getString(cursor.getColumnIndexOrThrow("prep_time")), "1 minute")
     }
@@ -86,14 +86,21 @@ class RecipeDaoTest {
         recipeDao.insertAll(*recipes)
 
         val expected = listOf(
-            Recipe(1, "Test RecipeListItem", "10 minutes", "2 minutes"),
-            Recipe(2, "Second Test RecipeListItem", "8 minutes", "1 minute")
+            Recipe(1, "Test Recipe", "10 minutes", "2 minutes"),
+            Recipe(2, "Second Test Recipe", "8 minutes", "1 minute")
         )
 
         recipeDao.getAll()
             .test()
             .assertNoErrors()
             .assertValue(expected)
+    }
+
+    @Test fun verifyGetAllReturnsEmptyListWhenNoRecipesAreSaved() {
+        recipeDao.getAll()
+            .test()
+            .assertNoErrors()
+            .assertValue(emptyList())
     }
 
     @Test
@@ -128,11 +135,11 @@ class RecipeDaoTest {
     @Test
     fun verifyUpdateAllSucceeds() {
         recipeDao.insertAll(*recipes)
-        recipeDao.updateAll(Recipe(2, "Updated RecipeListItem", "8 minutes", "2 minutes"))
+        recipeDao.updateAll(Recipe(2, "Updated Recipe", "8 minutes", "2 minutes"))
 
         val expected = listOf(
-            Recipe(1, "Test RecipeListItem", "10 minutes", "2 minutes"),
-            Recipe(2, "Updated RecipeListItem", "8 minutes", "2 minutes")
+            Recipe(1, "Test Recipe", "10 minutes", "2 minutes"),
+            Recipe(2, "Updated Recipe", "8 minutes", "2 minutes")
         )
 
         recipeDao.getAll()
@@ -144,10 +151,10 @@ class RecipeDaoTest {
     @Test
     fun verifyDeleteSucceeds() {
         recipeDao.insertAll(*recipes)
-        recipeDao.delete(Recipe(1, "Test RecipeListItem", "10 minutes", "2 minutes"))
+        recipeDao.delete(Recipe(1, "Test Recipe", "10 minutes", "2 minutes"))
 
         val expected = listOf(
-            Recipe(2, "Second Test RecipeListItem", "8 minutes", "1 minute")
+            Recipe(2, "Second Test Recipe", "8 minutes", "1 minute")
         )
 
         recipeDao.getAll()

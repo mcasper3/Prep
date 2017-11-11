@@ -2,13 +2,11 @@ package io.github.mcasper3.prep.data
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import io.github.mcasper3.prep.BuildConfig
 import io.github.mcasper3.prep.data.api.PrepApi
 import io.github.mcasper3.prep.data.database.PrepDatabase
-import io.github.mcasper3.prep.data.sources.DataManager
 import io.github.mcasper3.prep.injection.AppContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,8 +17,6 @@ import javax.inject.Singleton
 
 @Module
 abstract class DataModule {
-
-    @Binds abstract fun provideDataManager(dataManager: DataManagerImpl): DataManager
 
     @Module companion object {
         @JvmStatic
