@@ -6,7 +6,7 @@ import io.github.mcasper3.prep.injection.scope.FragmentScope
 import io.github.mcasper3.prep.recipes.list.creation.CreationOptionsBottomSheetDialogFragment
 
 @Module
-abstract class RecipeListActivityModule {
+abstract class RecipeListModule {
 
     @FragmentScope
     @ContributesAndroidInjector

@@ -109,7 +109,7 @@ class RecipeDaoTest {
         stepDao.insertAll(*steps)
         ingredientDao.insertAll(*ingredients)
 
-        val expected = RecipeWithSteps(1, "Test RecipeListItem", "10 minutes", "2 minutes").apply {
+        val expected = RecipeWithSteps(1, "Test Recipe", "10 minutes", "2 minutes").apply {
             steps = listOf(
                 StepWithIngredients(1, "Step 1", 1, 1).apply {
                     ingredients = listOf(
