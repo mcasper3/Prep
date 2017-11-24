@@ -11,6 +11,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.HasSupportFragmentInjector
 import io.github.mcasper3.prep.R
+import io.github.mcasper3.prep.add.AddRecipeActivity
 import io.github.mcasper3.prep.injection.scope.FragmentScope
 import io.github.mcasper3.prep.recipes.camera.CameraActivity
 import kotterknife.bindView
@@ -54,10 +55,14 @@ class CreationOptionsBottomSheetDialogFragment @Inject constructor(
     override fun supportFragmentInjector() = childFragmentInjector
 
     override fun goToWriteRecipe() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        dismiss()
+        startActivity(AddRecipeActivity.createIntent(context))
     }
 
-    override fun goToTakePhoto() = startActivity(CameraActivity.createIntent(context))
+    override fun goToTakePhoto() {
+        dismiss()
+        startActivity(CameraActivity.createIntent(context))
+    }
 
     override fun goToChoosePhoto() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

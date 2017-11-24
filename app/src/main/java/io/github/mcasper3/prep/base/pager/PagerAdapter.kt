@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 @ActivityScope
 class PagerAdapter<T, F : Fragment> @Inject constructor(
-        activity: PrepActivity<*, *>,
-        private val dataProvider: PagerDataProvider<T>,
-        private val fragmentProvider: FragmentProvider<T, F>
+    activity: PrepActivity<*, *>,
+    private val dataProvider: PagerDataProvider<T>,
+    private val fragmentProvider: FragmentProvider<T, F>
 ) : FragmentStatePagerAdapter(activity.getSupportFragmentManager()) {
 
     override fun getItem(position: Int) = fragmentProvider.newInstance(dataProvider.data[position])

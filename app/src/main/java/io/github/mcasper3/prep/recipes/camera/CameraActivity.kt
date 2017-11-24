@@ -12,7 +12,6 @@ import android.provider.MediaStore
 import android.speech.tts.TextToSpeech
 import android.support.design.widget.Snackbar
 import android.support.v4.content.FileProvider
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -24,6 +23,7 @@ import io.github.mcasper3.prep.util.PermissionHelper
 import io.github.mcasper3.prep.util.extensions.resize
 import io.reactivex.disposables.CompositeDisposable
 import kotterknife.bindView
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -32,7 +32,6 @@ import javax.inject.Inject
 
 class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
 
-    @Inject override lateinit var presenter: CameraPresenter
     @Inject lateinit var permissionHelper: PermissionHelper
 
     private val takePhotoButton: Button by bindView(R.id.take_photo)
@@ -51,10 +50,10 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
 
         val listener = TextToSpeech.OnInitListener { status ->
             if (status == TextToSpeech.SUCCESS) {
-                Log.d("OnInitListener", "Text to speech engine started successfully.")
+                Timber.d("Text to speech engine started successfully.")
                 tts?.language = Locale.US
             } else {
-                Log.d("OnInitListener", "Error starting the text to speech engine.")
+                Timber.d("Error starting the text to speech engine.")
             }
         }
         tts = TextToSpeech(this.applicationContext, listener)
@@ -120,6 +119,10 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     }
 
     override fun showEmpty() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun hideEmpty() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

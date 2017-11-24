@@ -10,8 +10,7 @@ import javax.inject.Inject
 
 class RecipeViewerActivity : PrepActivity<RecipeViewerPresenter, RecipeViewerView>() {
 
-    @Inject override lateinit var presenter: RecipeViewerPresenter
-    @Inject lateinit var adapter: PagerAdapter<@JvmWildcard RecipePart, @JvmWildcard RecipePartFragment>
+    @Inject lateinit var adapter: PagerAdapter<RecipePart, RecipePartFragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

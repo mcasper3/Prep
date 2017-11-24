@@ -96,11 +96,26 @@ class RecipeDaoTest {
             .assertValue(expected)
     }
 
-    @Test fun verifyGetAllReturnsEmptyListWhenNoRecipesAreSaved() {
+    @Test
+    fun verifyGetAllReturnsEmptyListWhenNoRecipesAreSaved() {
         recipeDao.getAll()
             .test()
             .assertNoErrors()
             .assertValue(emptyList())
+    }
+
+    @Test
+    fun verifyGetAllSavedRecipesDoesNotReturnRecipeWithIdOf1() {
+        recipeDao.insertAll(*recipes)
+
+        val expected = listOf(
+            Recipe(2, "Second Test Recipe", "8 minutes", "1 minute")
+        )
+
+        recipeDao.getAllSavedRecipes()
+            .test()
+            .assertNoErrors()
+            .assertValue(expected)
     }
 
     @Test
@@ -130,6 +145,14 @@ class RecipeDaoTest {
             .test()
             .assertNoErrors()
             .assertValue(expected)
+    }
+
+    @Test
+    fun verifyGetByIdReturnsWhenNoItemIsFound() {
+        recipeDao.getById(1)
+            .test()
+            .assertNoErrors()
+            .assertNoValues()
     }
 
     @Test

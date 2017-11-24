@@ -1,12 +1,12 @@
 package io.github.mcasper3.prep.base
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import dagger.android.support.DaggerAppCompatActivity
+import javax.inject.Inject
 
-@SuppressLint("Registered")
-open class PrepActivity<P, V : View> : DaggerAppCompatActivity() where P : Presenter<V> {
-    open lateinit var presenter: P
+abstract class PrepActivity<P, V : View> : DaggerAppCompatActivity() where P : Presenter<V> {
+
+    @Inject protected lateinit var presenter: P
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

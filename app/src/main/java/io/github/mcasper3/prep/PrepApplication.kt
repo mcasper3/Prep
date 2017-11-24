@@ -5,17 +5,22 @@ import android.os.StrictMode
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
+import io.github.mcasper3.prep.data.database.DatabaseHelper
 import io.github.mcasper3.prep.injection.component.ApplicationComponent
 import io.github.mcasper3.prep.injection.component.DaggerApplicationComponent
+import io.github.mcasper3.prep.recipeviewer.Recipe
 import io.github.mcasper3.prep.util.ProdTree
 import timber.log.Timber
+import javax.inject.Inject
 
 class PrepApplication : DaggerApplication() {
 
+    @Inject internal lateinit var databaseHelper: DatabaseHelper
+
     private val appComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.builder()
-                .application(this)
-                .build()
+            .application(this)
+            .build()
     }
 
     override fun applicationInjector(): AndroidInjector<out DaggerApplication> = appComponent
@@ -30,17 +35,17 @@ class PrepApplication : DaggerApplication() {
         LeakCanary.install(this)
 
         StrictMode.setThreadPolicy(
-                StrictMode.ThreadPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .penaltyDialog()
-                        .build()
+            StrictMode.ThreadPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .penaltyDialog()
+                .build()
         )
         StrictMode.setVmPolicy(
-                StrictMode.VmPolicy.Builder()
-                        .detectAll()
-                        .penaltyLog()
-                        .build()
+            StrictMode.VmPolicy.Builder()
+                .detectAll()
+                .penaltyLog()
+                .build()
         )
 
         appComponent.inject(this)
@@ -50,6 +55,8 @@ class PrepApplication : DaggerApplication() {
         } else {
             Timber.plant(ProdTree())
         }
+
+        databaseHelper.insertInitialRecipe(Recipe(mutableListOf(), "", "", ""))
     }
 
     companion object {

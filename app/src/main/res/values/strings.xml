@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Prep</string>
     <string name="title_activity_main">My Recipes</string>
+    <string name="title_activity_add_recipe">Add Recipe</string>
 
     <string name="add_link">Add recipe link</string>
     <string name="capture_image">Add photo of Recipe</string>
@@ -16,4 +17,5 @@
     <string name="title_activity_recipe_viewer">Recipe Viewer</string>
     <string name="no_recipes">You have no recipes saved. Add a recipe!</string>
     <string name="failed_to_load_recipes">Failed to load recipes</string>
+    <string name="save">Save</string>
 </resources>

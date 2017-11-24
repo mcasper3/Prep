@@ -56,5 +56,13 @@ abstract class DataModule {
         @JvmStatic
         @Provides
         fun provideRecipeDao(database: PrepDatabase) = database.recipeDao()
+
+        @JvmStatic
+        @Provides
+        fun provideStepDao(database: PrepDatabase) = database.stepDao()
+
+        @JvmStatic
+        @Provides
+        fun provideIngredientDao(database: PrepDatabase) = database.ingredientDao()
     }
 }

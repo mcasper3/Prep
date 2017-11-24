@@ -6,6 +6,7 @@ import io.github.mcasper3.prep.data.api.UiModel
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 import javax.inject.Inject
 
 class RecipeListPresenter @Inject constructor(
@@ -14,8 +15,11 @@ class RecipeListPresenter @Inject constructor(
 
     fun getRecipes(): Flowable<UiModel> =
         recipeDataSource.getAllRecipes()
-            .flatMap { Flowable.just<UiModel>(GetRecipeListSuccessUiModel(it)) }
-            .onErrorReturn { FailureUiModel() }
+            .flatMap { Flowable.just<UiModel>(GetRecipeListSuccessUiModel(it.map { RecipeListViewHolderFactory(it) })) }
+            .onErrorReturn {
+                Timber.e(it)
+                FailureUiModel()
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 }

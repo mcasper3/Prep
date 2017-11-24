@@ -13,7 +13,10 @@ interface StepDao {
     fun getAll(): Flowable<List<Step>>
 
     @Insert
-    fun insertAll(vararg steps: Step)
+    fun insertAll(vararg steps: Step): List<Long>
+
+    @Insert
+    fun insert(step: Step): Long
 
     @Update
     fun updateAll(vararg steps: Step)

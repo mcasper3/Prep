@@ -29,13 +29,14 @@ class RecipeListPresenterTest {
             RecipeListItem("First", "100", "20"),
             RecipeListItem("Second", "15", "30")
         )
+        val expected = recipeListItems.map { RecipeListViewHolderFactory(it) }
         whenever(recipeDataSource.getAllRecipes())
             .thenReturn(Flowable.just(recipeListItems))
 
         presenter.getRecipes()
             .test()
             .assertNoErrors()
-            .assertValue(GetRecipeListSuccessUiModel(recipeListItems))
+            .assertValue(GetRecipeListSuccessUiModel(expected))
     }
 
     @Test
