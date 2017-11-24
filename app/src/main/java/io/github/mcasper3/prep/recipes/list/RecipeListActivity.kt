@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.recycler.PrepRecyclerActivity
-import io.github.mcasper3.prep.data.api.FailureUiModel
-import io.github.mcasper3.prep.data.api.UiModel
+import io.github.mcasper3.prep.base.FailureUiModel
+import io.github.mcasper3.prep.base.UiModel
 import io.github.mcasper3.prep.recipes.list.creation.CreationOptionsBottomSheetDialogFragment
 import io.reactivex.disposables.CompositeDisposable
 

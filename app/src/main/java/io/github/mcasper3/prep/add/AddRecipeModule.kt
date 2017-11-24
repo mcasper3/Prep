@@ -11,6 +11,6 @@ class AddRecipeModule {
     companion object {
         @JvmStatic
         @Provides
-        fun provideRecyclerConfiguration() = RecyclerConfiguration()
+        fun provideRecyclerConfiguration() = RecyclerConfiguration(isSwipeRefreshEnabled = false)
     }
 }

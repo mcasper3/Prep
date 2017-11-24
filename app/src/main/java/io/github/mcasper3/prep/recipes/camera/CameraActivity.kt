@@ -17,7 +17,7 @@ import android.widget.Button
 import android.widget.ImageView
 import io.github.mcasper3.prep.R
 import io.github.mcasper3.prep.base.PrepActivity
-import io.github.mcasper3.prep.data.api.FailureUiModel
+import io.github.mcasper3.prep.base.FailureUiModel
 import io.github.mcasper3.prep.data.api.ocr.OcrResponse
 import io.github.mcasper3.prep.util.PermissionHelper
 import io.github.mcasper3.prep.util.extensions.resize

@@ -8,7 +8,6 @@ import dagger.android.support.DaggerApplication
 import io.github.mcasper3.prep.data.database.DatabaseHelper
 import io.github.mcasper3.prep.injection.component.ApplicationComponent
 import io.github.mcasper3.prep.injection.component.DaggerApplicationComponent
-import io.github.mcasper3.prep.recipeviewer.Recipe
 import io.github.mcasper3.prep.util.ProdTree
 import timber.log.Timber
 import javax.inject.Inject
@@ -56,7 +55,7 @@ class PrepApplication : DaggerApplication() {
             Timber.plant(ProdTree())
         }
 
-        databaseHelper.insertInitialRecipe(Recipe(mutableListOf(), "", "", ""))
+        databaseHelper.insertInitialRecipe()
     }
 
     companion object {

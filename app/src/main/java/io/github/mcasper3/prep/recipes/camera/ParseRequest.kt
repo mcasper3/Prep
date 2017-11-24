@@ -1,6 +1,6 @@
 package io.github.mcasper3.prep.recipes.camera
 
-import io.github.mcasper3.prep.data.api.SuccessUiModel
+import io.github.mcasper3.prep.base.SuccessUiModel
 import io.github.mcasper3.prep.data.api.ocr.OcrResponse
 import okhttp3.MediaType
 import okhttp3.MultipartBody

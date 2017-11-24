@@ -1,8 +1,8 @@
 package io.github.mcasper3.prep.recipes.list
 
 import io.github.mcasper3.prep.base.Presenter
-import io.github.mcasper3.prep.data.api.FailureUiModel
-import io.github.mcasper3.prep.data.api.UiModel
+import io.github.mcasper3.prep.base.FailureUiModel
+import io.github.mcasper3.prep.base.UiModel
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

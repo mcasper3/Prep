@@ -1,6 +1,7 @@
 package io.github.mcasper3.prep.add
 
-import io.github.mcasper3.prep.base.View
+import io.github.mcasper3.prep.base.LceView
 
-interface AddRecipeView : View {
+interface AddRecipeView : LceView {
+    fun addStepRow()
 }

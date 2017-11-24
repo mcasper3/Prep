@@ -10,10 +10,10 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.mcasper3.prep.R
+import io.github.mcasper3.prep.base.FailureUiModel
 import io.github.mcasper3.prep.base.LceView
 import io.github.mcasper3.prep.base.PrepActivity
 import io.github.mcasper3.prep.base.Presenter
-import io.github.mcasper3.prep.data.api.FailureUiModel
 import kotterknife.bindOptionalView
 import kotterknife.bindView
 import javax.inject.Inject
@@ -28,16 +28,19 @@ abstract class PrepRecyclerActivity<P, V> : PrepActivity<P, V>(), LceView where 
     protected val emptyStateImage: ImageView? by bindOptionalView(R.id.empty_state_image)
 
     private val recyclerView: RecyclerView by bindView(R.id.recycler_view)
-    private val fab: FloatingActionButton? by bindView(R.id.fab)
-    private val swipeRefreshLayout: SwipeRefreshLayout? by bindView(R.id.swipe_refresh)
+    private val fab: FloatingActionButton? by bindOptionalView(R.id.fab)
+    private val swipeRefreshLayout: SwipeRefreshLayout? by bindOptionalView(R.id.swipe_refresh)
     private val loadingView: View? by bindOptionalView(R.id.loading)
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
 
+        setSupportActionBar(toolbar)
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
+        swipeRefreshLayout?.isEnabled = configuration.isSwipeRefreshEnabled
         swipeRefreshLayout?.setOnRefreshListener { onSwipeRefresh() }
         swipeRefreshLayout?.setColorSchemeResources(R.color.colorAccent)
         loadingView?.visibility = View.VISIBLE

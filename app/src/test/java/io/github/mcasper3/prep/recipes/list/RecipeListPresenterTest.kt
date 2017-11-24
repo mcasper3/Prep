@@ -2,7 +2,7 @@ package io.github.mcasper3.prep.recipes.list
 
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
-import io.github.mcasper3.prep.data.api.FailureUiModel
+import io.github.mcasper3.prep.base.FailureUiModel
 import io.reactivex.Flowable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.plugins.RxJavaPlugins

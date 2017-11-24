@@ -1,4 +1,4 @@
-package io.github.mcasper3.prep.data.api
+package io.github.mcasper3.prep.base
 
 import android.support.annotation.StringRes
 
