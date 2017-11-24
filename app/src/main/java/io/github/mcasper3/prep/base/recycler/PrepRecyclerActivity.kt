@@ -35,7 +35,7 @@ abstract class PrepRecyclerActivity<P, V> : PrepActivity<P, V>(), LceView where 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
 
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         recyclerView.adapter = adapter
         swipeRefreshLayout?.setOnRefreshListener { onSwipeRefresh() }

@@ -4,11 +4,10 @@ import android.view.ViewGroup
 
 abstract class ViewHolderFactory<T>(protected val item: T) {
     abstract fun createViewHolder(parent: ViewGroup): BaseViewHolder<T>
-    abstract fun bind(viewHolder: BaseViewHolder<T>)
 
     fun bindViewHolder(viewHolder: BaseViewHolder<*>) {
         @Suppress("UNCHECKED_CAST")
-        bind(viewHolder as BaseViewHolder<T>)
+        (viewHolder as BaseViewHolder<T>).bind(item)
     }
 
     fun getViewType() = javaClass.name.hashCode()
