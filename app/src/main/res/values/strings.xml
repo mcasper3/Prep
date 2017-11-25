@@ -2,6 +2,7 @@
     <string name="app_name">Prep</string>
     <string name="title_activity_main">My Recipes</string>
     <string name="title_activity_add_recipe">Add Recipe</string>
+    <string name="title_activity_add_step">Add Step</string>
 
     <string name="add_link">Add recipe link</string>
     <string name="capture_image">Add photo of Recipe</string>
@@ -18,10 +19,14 @@
     <string name="no_recipes">You have no recipes saved. Add a recipe!</string>
     <string name="failed_to_load_recipes">Failed to load recipes</string>
     <string name="save">Save</string>
+    <string name="add">Add</string>
 
     <string name="recipe_name">Recipe Name</string>
     <string name="total_prep_time">Total Prep Time</string>
     <string name="total_cook_time">Total Cook Time</string>
     <string name="steps">Steps</string>
     <string name="content_description_add_step">Add Step</string>
+
+    <string name="step_directions">Directions</string>
+    <string name="ingredients">Ingredients</string>
 </resources>

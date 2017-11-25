@@ -57,8 +57,10 @@
             android:label="@string/title_activity_add_recipe"
             android:theme="@style/AppTheme"
             />
-        <activity android:name=".add.step.AddStepActivity">
-        </activity>
+        <activity android:name=".add.step.AddStepActivity"
+            android:label="@string/title_activity_add_step"
+            android:theme="@style/AppTheme"
+            />
     </application>
 
 </manifest>

@@ -12,6 +12,9 @@ interface StepDao {
     @Query("SELECT * FROM steps")
     fun getAll(): Flowable<List<Step>>
 
+    @Query("SELECT * FROM steps WHERE recipe_id = :recipeId")
+    fun getAllByRecipeId(recipeId: Int): Flowable<List<Step>>
+
     @Insert
     fun insertAll(vararg steps: Step): List<Long>
 

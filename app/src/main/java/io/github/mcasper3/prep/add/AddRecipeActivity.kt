@@ -5,12 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import io.github.mcasper3.prep.R
+import io.github.mcasper3.prep.add.step.AddStepActivity
 import io.github.mcasper3.prep.base.InProgressUiModel
 import io.github.mcasper3.prep.base.UiModel
 import io.github.mcasper3.prep.base.recycler.PrepRecyclerActivity
-import io.github.mcasper3.prep.recipeviewer.Recipe
 import io.reactivex.disposables.CompositeDisposable
 import kotterknife.bindView
 
@@ -19,18 +20,26 @@ class AddRecipeActivity : PrepRecyclerActivity<AddRecipePresenter, AddRecipeView
     private val recipeName: EditText by bindView(R.id.recipe_name)
     private val totalPrepTime: EditText by bindView(R.id.total_prep_time)
     private val totalCookTime: EditText by bindView(R.id.total_cook_time)
+    private val addStepButton: View by bindView(R.id.add_step)
 
     private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_recipe)
+        setContentView(R.layout.view_recycler_with_top_layout)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        addStepButton.setOnClickListener { startActivity(AddStepActivity.createIntent(this, adapter.itemCount + 1)) }
+    }
+
+    override fun onPause() {
+        compositeDisposable.clear()
+        super.onPause()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_add_recipe, menu)
+        menuInflater.inflate(R.menu.menu_save_option, menu)
         return true
     }
 
@@ -45,15 +54,11 @@ class AddRecipeActivity : PrepRecyclerActivity<AddRecipePresenter, AddRecipeView
         return super.onOptionsItemSelected(item)
     }
 
-    override fun addStepRow() {
-
-    }
-
     private fun saveRecipe(isAutoSave: Boolean = true) {
         compositeDisposable.add(
             presenter
                 .saveRecipe(
-                    Recipe(mutableListOf(), recipeName.text.toString(), totalCookTime.text.toString(), totalPrepTime.text.toString())
+                    RecipeInformation(recipeName.text.toString(), totalCookTime.text.toString(), totalPrepTime.text.toString())
                 )
                 .subscribe { if (!isAutoSave) updateUi(it) }
         )

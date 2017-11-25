@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.view.ViewStub
 import android.widget.ImageView
 import android.widget.TextView
 import io.github.mcasper3.prep.R
@@ -31,11 +32,15 @@ abstract class PrepRecyclerActivity<P, V> : PrepActivity<P, V>(), LceView where 
     private val fab: FloatingActionButton? by bindOptionalView(R.id.fab)
     private val swipeRefreshLayout: SwipeRefreshLayout? by bindOptionalView(R.id.swipe_refresh)
     private val loadingView: View? by bindOptionalView(R.id.loading)
+    private val content: ViewStub? by bindOptionalView(R.id.stub_content)
 
     override fun setContentView(layoutResID: Int) {
         super.setContentView(layoutResID)
 
         setSupportActionBar(toolbar)
+
+        content?.layoutResource = configuration.topLayoutResId
+        content?.inflate()
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))

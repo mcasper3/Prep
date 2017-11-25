@@ -22,7 +22,9 @@ abstract class RecipeListModule {
         fun provideRecyclerConfiguration() = RecyclerConfiguration(
             R.string.no_recipes,
             R.string.failed_to_load_recipes,
-            R.drawable.empty_state
+            R.drawable.empty_state,
+            true,
+            0
         )
     }
 }

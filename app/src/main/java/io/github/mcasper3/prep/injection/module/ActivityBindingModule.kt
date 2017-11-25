@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import io.github.mcasper3.prep.add.AddRecipeActivity
 import io.github.mcasper3.prep.add.AddRecipeModule
+import io.github.mcasper3.prep.add.step.AddStepActivity
+import io.github.mcasper3.prep.add.step.AddStepModule
 import io.github.mcasper3.prep.injection.scope.ActivityScope
 import io.github.mcasper3.prep.recipes.camera.CameraActivity
 import io.github.mcasper3.prep.recipes.camera.CameraModule
@@ -30,4 +32,8 @@ abstract class ActivityBindingModule {
     @ActivityScope
     @ContributesAndroidInjector(modules = arrayOf(AddRecipeModule::class))
     abstract fun addRecipeActivity(): AddRecipeActivity
+
+    @ActivityScope
+    @ContributesAndroidInjector(modules = arrayOf(AddStepModule::class))
+    abstract fun addStepActivity(): AddStepActivity
 }

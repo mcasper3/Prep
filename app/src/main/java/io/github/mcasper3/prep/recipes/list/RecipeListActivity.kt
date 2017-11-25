@@ -4,15 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import io.github.mcasper3.prep.R
-import io.github.mcasper3.prep.base.recycler.PrepRecyclerActivity
 import io.github.mcasper3.prep.base.FailureUiModel
 import io.github.mcasper3.prep.base.UiModel
+import io.github.mcasper3.prep.base.recycler.PrepRecyclerActivity
 import io.github.mcasper3.prep.recipes.list.creation.CreationOptionsBottomSheetDialogFragment
 import io.reactivex.disposables.CompositeDisposable
 
 class RecipeListActivity : PrepRecyclerActivity<RecipeListPresenter, RecipeListView>(), RecipeListView {
 
-    private val compositeDisposables = CompositeDisposable()
+    private val compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +28,7 @@ class RecipeListActivity : PrepRecyclerActivity<RecipeListPresenter, RecipeListV
     }
 
     override fun onPause() {
-        compositeDisposables.dispose()
+        compositeDisposable.clear()
         super.onPause()
     }
 
@@ -54,7 +54,9 @@ class RecipeListActivity : PrepRecyclerActivity<RecipeListPresenter, RecipeListV
         }
     }
 
-    private fun getRecipes() = compositeDisposables.add(presenter.getRecipes().subscribe { updateUi(it) })
+    private fun getRecipes() {
+        compositeDisposable.add(presenter.getRecipes().subscribe { updateUi(it) })
+    }
 
     private fun showRecipes(recipes: List<RecipeListViewHolderFactory>) {
         hideEmpty()

@@ -16,8 +16,8 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import io.github.mcasper3.prep.R
-import io.github.mcasper3.prep.base.PrepActivity
 import io.github.mcasper3.prep.base.FailureUiModel
+import io.github.mcasper3.prep.base.PrepActivity
 import io.github.mcasper3.prep.data.api.ocr.OcrResponse
 import io.github.mcasper3.prep.util.PermissionHelper
 import io.github.mcasper3.prep.util.extensions.resize
@@ -74,7 +74,7 @@ class CameraActivity : PrepActivity<CameraPresenter, CameraView>(), CameraView {
     }
 
     override fun onDestroy() {
-        disposables.dispose()
+        disposables.clear()
 
         super.onDestroy()
     }
